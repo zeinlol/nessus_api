@@ -1,0 +1,364 @@
+{
+  "uuid": "ad629e16-03b6-8c1d-cef6-ef8c9dd3c658d24bd260ef5f9e66",
+  "plugins": {
+    "SMTP problems": {
+      "status": "enabled"
+    },
+    "Backdoors": {
+      "status": "enabled"
+    },
+    "Ubuntu Local Security Checks": {
+      "status": "enabled"
+    },
+    "Gentoo Local Security Checks": {
+      "status": "enabled"
+    },
+    "Oracle Linux Local Security Checks": {
+      "status": "enabled"
+    },
+    "RPC": {
+      "status": "enabled"
+    },
+    "Gain a shell remotely": {
+      "status": "enabled"
+    },
+    "Service detection": {
+      "status": "enabled"
+    },
+    "DNS": {
+      "status": "enabled"
+    },
+    "Mandriva Local Security Checks": {
+      "status": "enabled"
+    },
+    "Junos Local Security Checks": {
+      "status": "enabled"
+    },
+    "Misc.": {
+      "status": "enabled"
+    },
+    "FTP": {
+      "status": "enabled"
+    },
+    "Slackware Local Security Checks": {
+      "status": "enabled"
+    },
+    "Default Unix Accounts": {
+      "status": "enabled"
+    },
+    "AIX Local Security Checks": {
+      "status": "enabled"
+    },
+    "SNMP": {
+      "status": "enabled"
+    },
+    "OracleVM Local Security Checks": {
+      "status": "enabled"
+    },
+    "CGI abuses": {
+      "status": "enabled"
+    },
+    "Settings": {
+      "status": "enabled"
+    },
+    "CISCO": {
+      "status": "enabled"
+    },
+    "Firewalls": {
+      "status": "enabled"
+    },
+    "Databases": {
+      "status": "enabled"
+    },
+    "Debian Local Security Checks": {
+      "status": "enabled"
+    },
+    "Fedora Local Security Checks": {
+      "status": "enabled"
+    },
+    "Netware": {
+      "status": "enabled"
+    },
+    "Huawei Local Security Checks": {
+      "status": "enabled"
+    },
+    "Windows : User management": {
+      "status": "enabled"
+    },
+    "VMware ESX Local Security Checks": {
+      "status": "enabled"
+    },
+    "Virtuozzo Local Security Checks": {
+      "status": "enabled"
+    },
+    "CentOS Local Security Checks": {
+      "status": "enabled"
+    },
+    "Peer-To-Peer File Sharing": {
+      "status": "enabled"
+    },
+    "NewStart CGSL Local Security Checks": {
+      "status": "enabled"
+    },
+    "General": {
+      "status": "enabled"
+    },
+    "Policy Compliance": {
+      "status": "enabled"
+    },
+    "Amazon Linux Local Security Checks": {
+      "status": "enabled"
+    },
+    "Solaris Local Security Checks": {
+      "status": "enabled"
+    },
+    "F5 Networks Local Security Checks": {
+      "status": "enabled"
+    },
+    "Denial of Service": {
+      "status": "enabled"
+    },
+    "Windows : Microsoft Bulletins": {
+      "status": "enabled"
+    },
+    "SuSE Local Security Checks": {
+      "status": "enabled"
+    },
+    "Palo Alto Local Security Checks": {
+      "status": "enabled"
+    },
+    "Red Hat Local Security Checks": {
+      "status": "enabled"
+    },
+    "PhotonOS Local Security Checks": {
+      "status": "enabled"
+    },
+    "HP-UX Local Security Checks": {
+      "status": "enabled"
+    },
+    "CGI abuses : XSS": {
+      "status": "enabled"
+    },
+    "FreeBSD Local Security Checks": {
+      "status": "enabled"
+    },
+    "Windows": {
+      "status": "enabled"
+    },
+    "Scientific Linux Local Security Checks": {
+      "status": "enabled"
+    },
+    "MacOS X Local Security Checks": {
+      "status": "enabled"
+    },
+    "Web Servers": {
+      "status": "enabled"
+    },
+    "SCADA": {
+      "status": "enabled"
+    }
+  },
+  "audits": {
+    "custom": null,
+    "feed": null
+  },
+  "settings": {
+    "watchguard_offline_configs": "",
+    "unixfileanalysis_disable_xdev": "no",
+    "unixfileanalysis_include_paths": "",
+    "unixfileanalysis_exclude_paths": "",
+    "unixfileanalysis_file_extensions": "",
+    "unixfileanalysis_max_size": "",
+    "unixfileanalysis_max_cumulative_size": "",
+    "unixfileanalysis_max_depth": "",
+    "unix_docker_scan_scope": "host",
+    "sonicos_offline_configs": "",
+    "netapp_offline_configs": "",
+    "junos_offline_configs": "",
+    "huawei_offline_configs": "",
+    "procurve_offline_configs": "",
+    "procurve_config_to_audit": "Saved/(show config)",
+    "generic_ssh_escalation_command": "",
+    "generic_ssh_escalation_success": "",
+    "fortios_offline_configs": "",
+    "fireeye_offline_configs": "",
+    "extremeos_offline_configs": "",
+    "dell_f10_offline_configs": "",
+    "cisco_offline_configs": "",
+    "cisco_config_to_audit": "Saved/(show config)",
+    "cisco_aci_offline_configs": "",
+    "checkpoint_gaia_offline_configs": "",
+    "brocade_offline_configs": "",
+    "bluecoat_proxysg_offline_configs": "",
+    "arista_offline_configs": "",
+    "alcatel_timos_offline_configs": "",
+    "adtran_aos_offline_configs": "",
+    "patch_audit_over_telnet": "no",
+    "patch_audit_over_rsh": "no",
+    "patch_audit_over_rexec": "no",
+    "snmp_port": "161",
+    "additional_snmp_port1": "161",
+    "additional_snmp_port2": "161",
+    "additional_snmp_port3": "161",
+    "http_login_method": "POST",
+    "http_reauth_delay": "",
+    "http_login_max_redir": "0",
+    "http_login_invert_auth_regex": "no",
+    "http_login_auth_regex_on_headers": "no",
+    "http_login_auth_regex_nocase": "no",
+    "never_send_win_creds_in_the_clear": "yes",
+    "dont_use_ntlmv1": "yes",
+    "start_remote_registry": "no",
+    "enable_admin_shares": "no",
+    "start_server_service": "no",
+    "ssh_known_hosts": "",
+    "ssh_port": "22",
+    "ssh_client_banner": "OpenSSH_5.0",
+    "attempt_least_privilege": "no",
+    "region_dfw_pref_name": "yes",
+    "region_ord_pref_name": "yes",
+    "region_iad_pref_name": "yes",
+    "region_lon_pref_name": "yes",
+    "region_syd_pref_name": "yes",
+    "region_hkg_pref_name": "yes",
+    "microsoft_azure_subscriptions_ids": "",
+    "aws_ui_region_type": "Rest of the World",
+    "aws_us_east_1": "",
+    "aws_us_east_2": "",
+    "aws_us_west_1": "",
+    "aws_us_west_2": "",
+    "aws_ca_central_1": "",
+    "aws_eu_south_1": "",
+    "aws_eu_west_1": "",
+    "aws_eu_west_2": "",
+    "aws_eu_west_3": "",
+    "aws_eu_central_1": "",
+    "aws_eu_north_1": "",
+    "aws_af_south_1": "",
+    "aws_ap_east_1": "",
+    "aws_ap_northeast_1": "",
+    "aws_ap_northeast_2": "",
+    "aws_ap_northeast_3": "",
+    "aws_ap_southeast_1": "",
+    "aws_ap_southeast_2": "",
+    "aws_ap_south_1": "",
+    "aws_me_south_1": "",
+    "aws_sa_east_1": "",
+    "aws_use_https": "yes",
+    "aws_verify_ssl": "yes",
+    "log_whole_attack": "no",
+    "enable_plugin_debugging": "no",
+    "audit_trail": "use_scanner_default",
+    "include_kb": "use_scanner_default",
+    "enable_plugin_list": "no",
+    "custom_find_filepath_exclusions": "",
+    "custom_find_filesystem_exclusions": "",
+    "custom_find_filepath_inclusions": "",
+    "reduce_connections_on_congestion": "no",
+    "network_receive_timeout": "5",
+    "max_checks_per_host": "5",
+    "max_hosts_per_scan": "100",
+    "max_simult_tcp_sessions_per_host": "",
+    "max_simult_tcp_sessions_per_scan": "",
+    "safe_checks": "yes",
+    "stop_scan_on_disconnect": "no",
+    "slice_network_addresses": "no",
+    "auto_accept_disclaimer": "no",
+    "scan.allow_multi_target": "no",
+    "allow_post_scan_editing": "yes",
+    "reverse_lookup": "no",
+    "log_live_hosts": "no",
+    "display_unreachable_hosts": "no",
+    "display_unicode_characters": "no",
+    "report_verbosity": "Normal",
+    "report_superseded_patches": "yes",
+    "silent_dependencies": "yes",
+    "oracle_database_use_detected_sids": "no",
+    "scan_malware": "no",
+    "samr_enumeration": "yes",
+    "adsi_query": "yes",
+    "wmi_query": "yes",
+    "rid_brute_forcing": "no",
+    "request_windows_domain_info": "yes",
+    "scan_webapps": "yes",
+    "generic_webapp_tests": "yes",
+    "abort_generic_webapp_if_login_fails": "yes",
+    "try_all_http_methods": "yes",
+    "http_param_pollution": "yes",
+    "test_embedded_web_servers": "yes",
+    "combo_arg_values": "some pairs",
+    "stop_at_first_flaw": "per CGI",
+    "url_for_rfi": "http://rfi.nessus.org/rfi.txt",
+    "generic_webapp_tests_max_time": "5",
+    "webcrawler_start_page": "/",
+    "webcrawl_exclude_regex": "/server_privileges\\\\.php|logout",
+    "webcrawler_max_pages": "1000",
+    "webcrawl_max_depth": "6",
+    "webcrawl_follow_dynamic_pages": "no",
+    "user_agent_string": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)",
+    "start_cotp_tsap": "8",
+    "stop_cotp_tsap": "8",
+    "modbus_start_reg": "0",
+    "modbus_end_reg": "16",
+    "test_default_oracle_accounts": "yes",
+    "provided_creds_only": "yes",
+    "smtp_domain": "example.com",
+    "smtp_from": "nobody@example.com",
+    "smtp_to": "postmaster@[AUTO_REPLACED_IP]",
+    "av_grace_period": "0",
+    "report_paranoia": "Normal",
+    "thorough_tests": "no",
+    "svc_detection_on_all_ports": "yes",
+    "detect_ssl": "yes",
+    "ssl_prob_ports": "Known SSL ports",
+    "dtls_prob_ports": "None",
+    "cert_expiry_warning_days": "60",
+    "enumerate_all_ciphers": "yes",
+    "check_crl": "no",
+    "tcp_scanner": "no",
+    "tcp_firewall_detection": "Automatic (normal)",
+    "syn_scanner": "yes",
+    "syn_firewall_detection": "Automatic (normal)",
+    "udp_scanner": "no",
+    "ssh_netstat_scanner": "yes",
+    "wmi_netstat_scanner": "yes",
+    "snmp_scanner": "yes",
+    "only_portscan_if_enum_failed": "yes",
+    "verify_open_ports": "no",
+    "unscanned_closed": "no",
+    "portscan_range": "default",
+    "wol_mac_addresses": "",
+    "wol_wait_time": "5",
+    "scan_network_printers": "yes",
+    "scan_netware_hosts": "yes",
+    "scan_ot_devices": "yes",
+    "ping_the_remote_host": "yes",
+    "arp_ping": "yes",
+    "tcp_ping": "yes",
+    "tcp_ping_dest_ports": "built-in",
+    "icmp_ping": "yes",
+    "icmp_unreach_means_host_down": "no",
+    "icmp_ping_retries": "2",
+    "udp_ping": "no",
+    "test_local_nessus_host": "yes",
+    "fast_network_discovery": "no",
+    "emails": "",
+    "attach_report": "no",
+    "filter_type": "and",
+    "filters": [],
+    "launch_now": false,
+    "enabled": false,
+    "live_results": "",
+    "name": "name",
+    "description": "",
+    "folder_id": 3,
+    "scanner_id": "1",
+    "text_targets": "",
+    "file_targets": ""
+  },
+  "credentials": {
+    "add": {},
+    "edit": {},
+    "delete": []
+  }
+}
