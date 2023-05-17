@@ -118,18 +118,15 @@ class NessusCoreAPI:
 
         counter: int = 0
         success = False
+        timed_print(f'Trying to connect to the Nessus service ({self.api_url})... ')
         while counter < 20:
-            timed_print(f'Trying to connect to the Nessus service ({self.api_url})... ')
             try:
-                # self._post_request(path='session', data=self.auth_data)
                 response = self._get_request(path='session')
-                nessus_response = response.json()
-                timed_print(f'Nessus response: {nessus_response}')
-                if error:= nessus_response.get("error"):
+                if error:= response.json().get("error"):
                     if error == 'You need to log in to perform this request.':
                         success = True
                         break
-                    timed_print(error)
+                    timed_print(f'Nessus API response: {error}')
                     time.sleep(20)
                     continue
             except requests.exceptions.ConnectionError:

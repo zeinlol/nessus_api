@@ -48,7 +48,7 @@ class Results:
         host_id = self.scan.hosts.get('host_id')
         timed_print(f'Host ID: {host_id}')
         if not host_id:
-           self.add_error('No host data')
+           self.add_error('No data about target host. Please check target availability')
            return
         for vuln in self.scan.hosts.get('vulnerabilities', []):
             plugin_id = vuln.get('plugin_id')
