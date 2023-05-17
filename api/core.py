@@ -82,7 +82,7 @@ class NessusCoreAPI:
             self.session.cookies.update(cookies)
 
     def _post_request(self, path: str, data = None) -> requests.Response:
-        return self._post_request(path=f'{self.api_url}{path}', data=data)
+        return self.session.post(f'{self.api_url}{path}', data=data)
 
     def _get_request(self, path: str) -> requests.Response:
         return self.session.get(f'{self.api_url}{path}')
@@ -121,7 +121,17 @@ class NessusCoreAPI:
         while counter < 20:
             timed_print(f'Trying to connect to the Nessus service ({self.api_url})... ')
             try:
-                self._post_request(path='session', data=self.auth_data)
+                # self._post_request(path='session', data=self.auth_data)
+                response = self._get_request(path='session')
+                nessus_response = response.json()
+                timed_print(f'Nessus response: {nessus_response}')
+                if error:= nessus_response.get("error"):
+                    if error == 'You need to log in to perform this request.':
+                        success = True
+                        break
+                    timed_print(error)
+                    time.sleep(20)
+                    continue
             except requests.exceptions.ConnectionError:
                 counter += 1
                 time.sleep(10)

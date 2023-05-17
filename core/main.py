@@ -12,11 +12,10 @@ from core.tools import timed_print
 
 class Analyze:
     def __init__(self, address: str, api: NessusAPI, output_file: str,
-                 proxy: str | None = None, demo_mode: bool = False):
+                 proxy: str | None = None):
         self.current_scan: NessusScan | None = None
         self.address = address
         self.api = api
-        self.demo_mode = demo_mode
         self.output_file = output_file
         if proxy:
             self.init_proxy(proxy)

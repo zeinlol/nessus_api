@@ -13,11 +13,11 @@ def main() -> NoReturn:
         port=CLI_ARGUMENTS.port,
         secure=CLI_ARGUMENTS.secure,
     )
-    analyze = Analyze(address=CLI_ARGUMENTS.address,
+    analyze = Analyze(address=CLI_ARGUMENTS.target,
                       api=api,
                       proxy=CLI_ARGUMENTS.proxy,
                       output_file=CLI_ARGUMENTS.output_file,
-                      demo_mode=CLI_ARGUMENTS.demo_mode,)
+                      )
     analyze.run_scan_and_get_report()
 
 
