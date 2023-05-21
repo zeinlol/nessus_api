@@ -32,11 +32,12 @@ class ScanMixin:
             return NessusScan(
                 scan_id=created_scan.get('id'),
                 uuid=created_scan.get('uuid'),
-                name=created_scan.get("name", ''),
-                description=created_scan.get("description", ''),
+                name=created_scan.get('name') or created_scan.get('info', {}).get('name', {}),
+                description=created_scan.get('description', ''),
                 status=created_scan.get('info', {}).get('status', NessusStatuses.UNKNOWN.value),
                 hosts=created_scan.get('hosts', []),
-                error=created_scan.get('error')
+                error=created_scan.get('error'),
+                vulnerabilities=created_scan.get('vulnerabilities', []),
             )
         except Exception:
             return None

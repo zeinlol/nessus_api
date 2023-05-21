@@ -17,7 +17,6 @@ class PluginsMixin:
         try:
             return NessusPlugin(
                 info=plugin_data['info'],
-                description=plugin_data['plugindescription'],
                 outputs=plugin_data['outputs'],
             )
         except Exception:

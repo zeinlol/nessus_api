@@ -2,6 +2,7 @@ import json
 from typing import NoReturn
 
 from api.base import NessusAPI
+from api.classes.host import NessusHost
 from api.classes.scan import NessusScan
 from core.tools import timed_print
 
@@ -16,9 +17,15 @@ class Results:
         self.errors = errors
 
         self.store = {
-            'scan_metrics': {},
+            'scan_metrics': [],
             'issues': [],
-            'stats': {},
+            'stats': {
+                'critical_count': 0,
+                'high_count': 0,
+                'medium_count': 0,
+                'low_count': 0,
+                'info_count': 0,
+            },
             'errors': errors
         }
 
@@ -26,55 +33,46 @@ class Results:
         self.store['errors'].append(message)
 
     def parse_result(self) -> NoReturn:
-        timed_print(f"Results: {self.scan}")
-
-        self.store['scan_metrics'].update({
-            'target': self.scan.hosts.get('hostname'),
-            'total_requests': self.scan.hosts.get('totalchecksconsidered'),
-            'vuln_instances_total': self.scan.hosts.get('severity')
-        })
-        self.get_issues()
-        self.store['stats'].update({
-            'critical_count': self.scan.hosts.get('critical'),
-            'high_count': self.scan.hosts.get('high'),
-            'medium_count': self.scan.hosts.get('medium'),
-            'low_count': self.scan.hosts.get('low'),
-            'info_count': self.scan.hosts.get('info')
-        })
+        timed_print(f"Parsing results for {self.scan}")
+        for host in self.scan.parse_hosts():
+            self.update_scan_metrics(host=host)
+            self.update_scan_stats(host=host)
+            self.get_issues(host=host)
         with open(self.output_file, 'w') as f:
             json.dump(self.store, f, indent=2)
 
-    def get_issues(self):
-        host_id = self.scan.hosts.get('host_id')
-        timed_print(f'Host ID: {host_id}')
-        if not host_id:
+    def get_issues(self, host: NessusHost):
+        timed_print(f'Host ID: {host.host_id}')
+        if not host.host_id:
            self.add_error('No data about target host. Please check target availability')
            return
-        for vuln in self.scan.hosts.get('vulnerabilities', []):
+        for vuln in self.scan.vulnerabilities:
             plugin_id = vuln.get('plugin_id')
-            plugin = self.api.get_scan_plugin_result(scan_id=self.scan.scan_id, host_id=host_id, plugin_id=plugin_id)
+            plugin = self.api.get_scan_plugin_result(scan_id=self.scan.scan_id,
+                                                     host_id=host.host_id,
+                                                     plugin_id=plugin_id)
             if not plugin:
                 self.add_error(f'Could not get the result for the plugin: {plugin_id}')
                 continue
             attributes = plugin.description.attributes
             self.store['issues'].append({
                 'severity': plugin.description.severity,
-                'name': plugin.description.get('plugin'
-                                               'name'),
+                'name': plugin.description.plugin_name,
                 'description': attributes.description,
-                'ref_information': self.get_ref_information(ref_info=attributes.ref_information),
+                'ref_information': attributes.parse_ref_information(),
                 'see_also': attributes.see_also,
-                'outputs': self.get_outputs(data=plugin.outputs)
+                'outputs': plugin.parse_outputs()
             })
 
-    @staticmethod
-    def get_ref_information(ref_info: dict) -> list:
-        return [{'url': ref.get('url'), 'name': ref.get('name')} for ref in ref_info.get('ref', {})]
-
-    @staticmethod
-    def get_outputs(data: list) -> list:
-        return [
-            {'host': list(output.get('ports').values())[0][0].get('hostname'),
-             'ports': list(output.get('ports').keys())[0],
-             'plugin_output': output.get('plugin_output')}
-            for output in data]
+    def update_scan_metrics(self, host: NessusHost):
+        self.store['scan_metrics'].append({
+            'target': host.host_name,
+            'total_requests': host.total_checks_considered,
+            'vuln_instances_total': host.statistic_total
+        })
+    def update_scan_stats(self, host: NessusHost):
+        self.store['stats']['critical_count'] += host.statistic_critical
+        self.store['stats']['high_count'] += host.statistic_high
+        self.store['stats']['medium_count'] += host.statistic_medium
+        self.store['stats']['low_count'] += host.statistic_low
+        self.store['stats']['info_count'] += host.statistic_info

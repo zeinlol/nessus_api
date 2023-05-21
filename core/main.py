@@ -29,7 +29,10 @@ class Analyze:
     def run_scan_and_get_report(self) -> None:
         with open('scan_config.json') as f:
             scan_config: dict = json.loads(f.read())
-        scan_config['settings'].update({'text_targets': self.address})
+        scan_config['settings'].update({
+            'text_targets': self.address,
+            'name': f'Audit for {self.address}',
+        })
         self.current_scan = self.api.create_scan(scan_data=scan_config)
         if not self.current_scan:
             self.exit_with_error(message='Scan was not created')
@@ -39,6 +42,10 @@ class Analyze:
             self.exit_with_error(message='Scan was not launched')
         timed_print('The scan was successfully launched.')
 
+        # commend all code above and uncomment this 3 lines to use existing scan
+        # scan_id = scan_id_int
+        # self.current_scan = self.api.detail_scan(scan_id=scan_id)
+        # self.current_scan.scan_id = scan_id
         status = self.wait_for_finishing_scan()
         if status != NessusStatuses.COMPLETED.value:
             self.exit_with_error(message=f'Target scan was not competed and finished with status: {status}.')
@@ -59,17 +66,18 @@ class Analyze:
                 timed_print('Connection was aborted or happen other error. Try again in 30 seconds')
                 time.sleep(30)
                 continue
+            self.current_scan.hosts = scan.hosts
             self.current_scan.status = scan.status
+            self.current_scan.vulnerabilities = scan.vulnerabilities
+            hosts_progress = ''.join(
+                f'Host: {host.get("hostname", "Unknown")} Progress: {host.get("progress", "Unknown")} '
+                for host in self.current_scan.hosts
+            )
             if scan.status in FINAL_NESSUS_STATUSES:
-                self.current_scan.hosts = scan.hosts
-                hosts_progress = ''.join(
-                    f'Host: {host.get("hostname", "Unknown")} Progress: {host.get("progress", "Unknown")} '
-                    for host in self.current_scan.hosts
-                )
                 timed_print(f'Scanning ended with status: {scan.status.title()}. {hosts_progress}')
                 break
             else:
-                timed_print(f'The current scan status is: {scan.status.title()}.')
+                timed_print(f'The current scan status is: {scan.status.title()}. {hosts_progress}')
             if scan.error:
                 self.exit_with_error(f'Nessus API error: {scan.error}')
             time.sleep(15)
