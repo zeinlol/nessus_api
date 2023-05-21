@@ -56,7 +56,7 @@ class Analyze:
 
     def exit_with_error(self, message: str):
         with open(self.output_file, 'w') as f:
-            json.dump({'failed': message}, f, indent=4)
+            json.dump({'errors': [message]}, f, indent=4)
         self.exit_application(exit_code=1, message=message)
 
     def wait_for_finishing_scan(self) -> "NessusStatuses.value":
