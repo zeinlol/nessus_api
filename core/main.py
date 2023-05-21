@@ -59,8 +59,14 @@ class Analyze:
                 timed_print('Connection was aborted or happen other error. Try again in 30 seconds')
                 time.sleep(30)
                 continue
+            self.current_scan.status = scan.status
             if scan.status in FINAL_NESSUS_STATUSES:
-                timed_print(f'Scanning ended with status: {scan.status.title()}.')
+                self.current_scan.hosts = scan.hosts
+                hosts_progress = ''.join(
+                    f'Host: {host.get("hostname", "Unknown")} Progress: {host.get("progress", "Unknown")} '
+                    for host in self.current_scan.hosts
+                )
+                timed_print(f'Scanning ended with status: {scan.status.title()}. {hosts_progress}')
                 break
             else:
                 timed_print(f'The current scan status is: {scan.status.title()}.')

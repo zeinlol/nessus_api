@@ -35,7 +35,7 @@ class ScanMixin:
                 name=created_scan.get("name", ''),
                 description=created_scan.get("description", ''),
                 status=created_scan.get('info', {}).get('status', NessusStatuses.UNKNOWN.value),
-                hosts=created_scan.get('hosts', {}),
+                hosts=created_scan.get('hosts', []),
                 error=created_scan.get('error')
             )
         except Exception:

@@ -82,13 +82,33 @@ class NessusCoreAPI:
             self.session.cookies.update(cookies)
 
     def _post_request(self, path: str, data = None) -> requests.Response:
-        return self.session.post(f'{self.api_url}{path}', data=data)
+        response = self.session.post(f'{self.api_url}{path}', data=data)
+        if response.status_code in [403, 401]:
+            timed_print(f'request to "{path}" failed: {response.text}. Try again')
+            self.login()
+            # do not call function again to avoid looping
+            response = self.session.post(f'{self.api_url}{path}', data=data)
+        return response
 
-    def _get_request(self, path: str) -> requests.Response:
-        return self.session.get(f'{self.api_url}{path}')
+    def _get_request(self, path: str, resend: bool = True) -> requests.Response:
+        response = self.session.get(f'{self.api_url}{path}')
+        if not resend:
+            return response
+        if response.status_code in [403, 401]:
+            timed_print(f'request to "{path}" failed: {response.text}. Try again')
+            self.login()
+            # do not call function again to avoid looping
+            response = self.session.get(f'{self.api_url}{path}')
+        return response
 
     def _patch_request(self, path: str, data) -> requests.Response:
-        return self.session.patch(f'{self.api_url}{path}', data=data)
+        response = self.session.patch(f'{self.api_url}{path}', data=data)
+        if response.status_code in [403, 401]:
+            timed_print(f'request to "{path}" failed: {response.text}. Try again')
+            self.login()
+            # do not call function again to avoid looping
+            response = self.session.patch(f'{self.api_url}{path}', data=data)
+        return response
 
     def _delete_request(self, path: str) -> requests.Response:
         return self.session.delete(f'{self.api_url}{path}')
@@ -121,7 +141,7 @@ class NessusCoreAPI:
         timed_print(f'Trying to connect to the Nessus service ({self.api_url})... ')
         while counter < 20:
             try:
-                response = self._get_request(path='session')
+                response = self._get_request(path='session', resend=False)
                 if error:= response.json().get("error"):
                     if error == 'You need to log in to perform this request.':
                         success = True

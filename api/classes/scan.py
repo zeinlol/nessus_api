@@ -10,7 +10,7 @@ class NessusScan:
                  scan_uuid: str = None,
                  ):
         if hosts is None:
-            hosts = {}
+            hosts = []
         self.scan_id = scan_id
         self.uuid = uuid
         self.scan_uuid = scan_uuid
