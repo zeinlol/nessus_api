@@ -40,10 +40,13 @@ class NessusCoreAPI:
     def auth_data(self) -> NoReturn:
         return json.dumps({'username': self.username, 'password': self.password})
 
-    def login(self) -> NoReturn:
+    def _login_attempt(self):
         resp = self._post_request(path='session', data=self.auth_data)
         if resp.status_code == 200:
             timed_print('The session token was successfully received.')
+        elif 500 <= resp.status_code < 600:
+            return ConnectionError('The session token was not received due to API error. '
+                                   f'Code: {resp.status_code} data: {resp.content}.')
         else:
             timed_print('Failed to get session token. Something went wrong.\n'
                         f'Auth data: {self.auth_data}\nStatus: {resp.status_code}\nContent: {resp.content}')
@@ -51,6 +54,19 @@ class NessusCoreAPI:
         self._update_session(headers={'X-Cookie': f'token={resp.json().get("token")}'})
         api_token = self._get_api_token()
         self._update_session(headers={'X-API-Token': api_token})
+
+    def login(self) -> NoReturn:
+        _counter = 0
+        while _counter < 20:
+            try:
+                self._login_attempt()
+                return
+            except ConnectionError as e:
+                _counter += 1
+                time.sleep(30)
+                timed_print(f"Nessus API internal error: {e}")
+        timed_print('Can not establish connection. Exit')
+        exit(1)
 
     def _get_api_token(self) -> str | NoReturn:
         """Retrieve the nessus API token required to add scans.
